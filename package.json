@@ -1,0 +1,12 @@
+{
+  "name": "inklog.js",
+  "version": "1.0.0",
+  "description": "A Basic Nodejs Logger",
+  "main": "index.js",
+  "repository": "https://github.com/Lucaslah/inklog.js.git",
+  "author": "Lucaslah <lucas.petrino@spycampllc.ml>",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.1"
+  }
+}
