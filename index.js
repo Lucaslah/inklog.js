@@ -1,1 +1,3 @@
-module.exports = {}
+module.exports = {
+    Logger: require('./src/logger')
+}
