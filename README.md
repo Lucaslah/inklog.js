@@ -18,3 +18,6 @@ Nodejs Logger
 1. Clone Repo: `gh repo clone Lucaslah/inklog.js` or `git clone https://github.com/lucaslah/inklog.js`
 2. Install Dependencies: `npm install` or `yarn`
 3. Build Code: `yarn build` or `npm run build`
+
+## Runkit Example
+https://runkit.com/embed/kcvxsyw90pq9
