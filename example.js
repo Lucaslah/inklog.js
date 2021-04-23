@@ -1,4 +1,4 @@
-const logger = require('./src/logger.js')
+const logger = require('./lib/Logger')
 
 logger.NoColor() // Removes Color
 
