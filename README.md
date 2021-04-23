@@ -19,5 +19,8 @@ Nodejs Logger
 2. Install Dependencies: `npm install` or `yarn`
 3. Build Code: `yarn build` or `npm run build`
 
+## Examples
+[Basic Example](example.js)
+
 ## Runkit Example
 https://runkit.com/embed/kcvxsyw90pq9
