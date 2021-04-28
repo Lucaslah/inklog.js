@@ -1,7 +1,7 @@
 # inklog.js
 Nodejs Logger
 
-![npm](https://img.shields.io/npm/v/inklog.js) ![npm](https://img.shields.io/npm/dw/inklog.js)
+![npm](https://img.shields.io/npm/v/inklog.js) ![npm](https://img.shields.io/npm/dw/inklog.js) ![npm bundle size](https://img.shields.io/bundlephobia/min/inklog.js)
 
 ## Install
 - yarn: `yarn add inklog.js`
