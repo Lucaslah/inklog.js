@@ -16,7 +16,7 @@ Nodejs Logger
 | debug |   <logger>.debug() | logger.debug('Hello World') | Cyan   | [DEBUG] |
 | log   |   <logger>.log()   | logger.log('Hello World')   | None   | None    |
 
-## Build
+## Development
 1. Clone Repo: `gh repo clone Lucaslah/inklog.js` or `git clone https://github.com/lucaslah/inklog.js`
 2. Install Dependencies: `npm install` or `yarn`
 3. Build Code: `yarn build` or `npm run build`
