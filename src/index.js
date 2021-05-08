@@ -1,7 +1,7 @@
 import chalk from "chalk";
 
 /**
- * inklog.js
+ * A Chalk Based Logger
  * @constructor
  */
 class Logger {
@@ -54,12 +54,15 @@ class Logger {
     // Loggers
 
     /**
-     * Basic Log, No Prefix
+     * Basic Log, Prefix: [LOG]
      * @param  {...any} args 
      */
     log(...args) {
-        /* Not Affected By No Color or No Prefix; TODO: Make Better */
-        console.log(this.logNoColor(args));
+        if (this.noPrefix) {
+            console.log(this.logNoColor(args));
+        } else {
+            console.log('[LOG] ' + this.logNoColor(args))
+        }
     };
 
     /**
