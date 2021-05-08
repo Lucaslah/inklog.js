@@ -3,8 +3,11 @@
     "version": "1.1.2",
     "description": "A Basic Nodejs Logger",
     "main": "lib/index.js",
-    "repository": "https://github.com/Lucaslah/inklog.js.git",
-    "author": "Lucaslah <lucas.petrino@spycampllc.ml>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Lucaslah/inklog.js.git"
+    },
+    "author": "lucaslah",
     "license": "MIT",
     "scripts": {
         "build": "babel src --out-dir lib --copy-files",
