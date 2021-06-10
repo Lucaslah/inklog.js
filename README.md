@@ -14,7 +14,7 @@ Nodejs Logger
 | info  |   <logger>.info()  | logger.info('Hello World')  | Green  | [INFO]  |
 | warn  |   <logger>.warn()  | logger.warn('Hello World')  | Yellow | [WARN]  |
 | debug |   <logger>.debug() | logger.debug('Hello World') | Cyan   | [DEBUG] |
-| log   |   <logger>.log()   | logger.log('Hello World')   | None   | None    |
+| log   |   <logger>.log()   | logger.log('Hello World')   | None   | [LOG]   |
 
 ## Development
 1. Clone Repo: `gh repo clone Lucaslah/inklog.js` or `git clone https://github.com/lucaslah/inklog.js`
@@ -22,7 +22,22 @@ Nodejs Logger
 3. Build Code: `yarn build` or `npm run build`
 
 ## Examples
-[Basic Example](example.js)
+```javascript
+const logger = require('inklog.js');
+
+// Loggers
+logger.debug('Debug Message');
+logger.info('Info Message');
+logger.error('Error Message');
+logger.warn('Warn Message');
+logger.log('Log Message');
+
+// Extras
+logger.AddColor();
+logger.NoColor();
+logger.addPrefix();
+logger.NoPrefix();
+```
 
 ## Runkit Example
 https://runkit.com/embed/kcvxsyw90pq9

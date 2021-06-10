@@ -10,16 +10,14 @@
     "author": "lucaslah",
     "license": "MIT",
     "scripts": {
-        "build": "babel src --out-dir lib --copy-files",
-        "types": "tsc",
+        "build": "tsc",
         "docs": "jsdoc --readme README.md -d docs ./src/index.js"
     },
     "dependencies": {
         "chalk": "^4.1.1"
     },
     "devDependencies": {
-        "babel-cli": "^6.26.0",
-        "babel-preset-es2015": "^6.24.1",
+        "@types/node": "^15.12.2",
         "jsdoc": "^3.6.6",
         "typescript": "^4.2.4"
     }
