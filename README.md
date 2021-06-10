@@ -40,4 +40,4 @@ logger.NoPrefix();
 ```
 
 ## Runkit Example
-https://runkit.com/embed/kcvxsyw90pq9
+https://runkit.com/embed/yu6f2ek7o6h7
