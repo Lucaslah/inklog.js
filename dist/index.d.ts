@@ -26,7 +26,7 @@ declare class Logger {
      * Adds the Prefix to all the Log Levels
      * @type {void}
      */
-    addPrefix(): void;
+    AddPrefix(): void;
     /**
      * Add's Color to all the Log Levels
      * @type {void}

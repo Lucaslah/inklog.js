@@ -47,7 +47,7 @@ class Logger {
      * Adds the Prefix to all the Log Levels
      * @type {void}
      */
-    public addPrefix() {
+    public AddPrefix() {
         this.noPrefix = false;
     };
 

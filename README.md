@@ -35,7 +35,7 @@ logger.log('Log Message');
 // Extras
 logger.AddColor();
 logger.NoColor();
-logger.addPrefix();
+logger.AddPrefix();
 logger.NoPrefix();
 ```
 
