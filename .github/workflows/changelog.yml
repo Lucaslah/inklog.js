@@ -1,0 +1,150 @@
+# This workflow provided by GitHub Actions Manager
+# Documentation: https://github.com/vemel/github_actions_js/blob/main/nodejs_workflows/README.md
+#
+# - Starts on Release published
+# - Release notes must be in [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format
+# - Creates a Release Pull Request from Release target branch with `release` label
+# - If the release is not a prerelease, cleans up `Unreleased` section in `CHANGELOG.md`
+# - Release Pull Request contains only version bump in `package.json` and updated `CHANGELOG.md`
+# - Release Pull Request uses branch `release/<version>`
+# - Signs commits if `GPG_PRIVATE_KEY` secret is set
+#
+# Secrets:
+#   GPG_PRIVATE_KEY - Key to sign commits https://docs.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key
+#   GPG_PRIVATE_KEY_PASSPHRASE - Passphrase for GPG private key
+
+name: Create Release Pull Request
+"on":
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag
+        required: true
+jobs:
+  release-new-version:
+    runs-on: ubuntu-latest
+    env:
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GPG_PRIVATE_KEY_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+    steps:
+      - name: Get Release
+        uses: actions/github-script@v3
+        id: release
+        with:
+          script: |
+            let release = null;
+            if (context.payload.inputs && context.payload.inputs.tag) {
+              const tagName = context.payload.inputs.tag;
+              // find Pull Request by number fom input
+              const releasesResponse = await github.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+              for (let releaseItem of releasesResponse.data) {
+                if (releaseItem.tag_name !== tagName) continue;
+                release = releaseItem;
+                core.info(`Found release ${release.name}`);
+                break;
+              }
+            }
+            if (context.payload.release){
+              // get Release from event payload
+              release = context.payload.release;
+            }
+
+            if (!release) {
+              throw new Error(`Cannot find Release`);
+            }
+
+            core.setOutput('target', release.target_commitish);
+            core.setOutput('branch', `release/${release.tag_name}`);
+            core.setOutput('id', release.id);
+            core.setOutput("url", release.html_url);
+            core.setOutput('tag', release.tag_name);
+            core.setOutput('name', release.name);
+            core.setOutput('body', release.body);
+            return true;
+      - name: Checkout Release target branch
+        id: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.release.outputs.target }}
+      - name: Get new version
+        id: version
+        uses: vemel/nextversion@0.1.1
+        with:
+          path: ./package.json
+          type: semver
+          result: ${{ steps.release.outputs.tag }}
+      - name: Set version
+        id: set-version
+        run: |
+          npm config set git-tag-version false
+          npm version ${{ steps.version.outputs.result }} --allow-same-version
+      - name: Add new release to CHANGELOG.md
+        id: changelog
+        uses: vemel/nextchange@0.1.0
+        with:
+          release: ${{ steps.version.outputs.result }}
+          clear: true
+          set: ${{ steps.release.outputs.body }}
+      - name: Clear Unreleased in CHANGELOG.md
+        id: clear-unreleased
+        if: ${{ steps.version.outputs.is-prerelease == 'false' }}
+        uses: vemel/nextchange@0.1.0
+        with:
+          release: Unreleased
+          clear: true
+      - name: Setup git credentials
+        id: setup-git
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      - name: Import GPG key
+        id: import-gpg
+        if: env.GPG_PRIVATE_KEY
+        uses: crazy-max/ghaction-import-gpg@v3
+        with:
+          gpg-private-key: ${{ env.GPG_PRIVATE_KEY }}
+          passphrase: ${{ env.GPG_PRIVATE_KEY_PASSPHRASE }}
+          git-user-signingkey: true
+          git-commit-gpgsign: true
+      - name: Commit changes
+        id: commit
+        run: |
+          VERSION=${{ toJSON(steps.version.outputs.result) }}
+          BRANCH=${{ toJSON(steps.release.outputs.branch) }}
+          git checkout -b $BRANCH
+          git commit -am "Bump version to $VERSION"
+          git push --set-upstream origin $BRANCH
+      - name: Create Pull Request
+        id: create-pull-request
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const response = await github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: ${{ toJSON(steps.release.outputs.branch) }},
+              base: ${{ toJSON(steps.release.outputs.target) }},
+              title: "Release ${{ steps.version.outputs.result }}",
+              body: ${{ toJSON(steps.changelog.outputs.result) }}
+            });
+
+            const pullRequestNumber = response.data.number;
+            core.info(`Release Pull Request labels: ${pullRequestNumber}`);
+
+            const labels = ['release', ${{ toJSON(steps.changelog.outputs.label) }}];
+            core.info(`Labels: ${labels}`);
+            await github.issues.setLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pullRequestNumber,
+              labels: labels
+            });
+
+            core.info(`Release Pull Request title: ${response.data.title}`);
+            core.info(`Release Pull Request URL: ${response.data.html_url}`);
