@@ -11,8 +11,7 @@
     "license": "MIT",
     "scripts": {
         "build": "tsc",
-        "docs": "jsdoc --readme README.md -d docs ./src/index.js",
-        "test": "jest"
+        "docs": "jsdoc --readme README.md -d docs ./src/index.js"
     },
     "dependencies": {
         "chalk": "^4.1.1"
@@ -21,7 +20,6 @@
         "@types/node": "^16.9.1",
         "jsdoc": "^3.6.6",
         "typescript": "^4.2.4",
-        "jest": "^27.1.0",
         "ts-jest": "27.0.5"
     }
 }
