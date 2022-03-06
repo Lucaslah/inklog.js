@@ -15,7 +15,7 @@
         "test": "jest"
     },
     "dependencies": {
-        "chalk": "^4.1.1"
+        "chalk": "^5.0.0"
     },
     "devDependencies": {
         "@types/node": "^17.0.5",
