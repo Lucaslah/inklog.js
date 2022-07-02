@@ -1,7 +1,7 @@
 # inklog.js
 A Mini Chalk based Nodejs Logger
 
-![npm](https://img.shields.io/npm/v/inklog.js) ![npm](https://img.shields.io/npm/dw/inklog.js) ![npm bundle size](https://img.shields.io/bundlephobia/min/inklog.js) ![Dependents (via libraries.io)](https://img.shields.io/librariesio/dependents/npm/inklog.js?label=npm%20dependents) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Lucaslah/inklog.js)
+<a href="https://www.npmjs.com/package/inklog.js"><img src="https://img.shields.io/npm/v/inklog.js" alt="npm"></a> ![npm](https://img.shields.io/npm/dw/inklog.js) ![npm bundle size](https://img.shields.io/bundlephobia/min/inklog.js) ![Dependents (via libraries.io)](https://img.shields.io/librariesio/dependents/npm/inklog.js?label=npm%20dependents) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Lucaslah/inklog.js)
 
 ## Install
 - yarn: `yarn add inklog.js`
